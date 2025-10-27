@@ -33,15 +33,21 @@ def getQty(item):
     return stock_data[item]
 
 def loadData(file="inventory.json"):
-    f = open(file, "r")
+# Replaced manual open/close with a 'with' block.
+# This automatically closes the file even if errors occur.
     global stock_data
-    stock_data = json.loads(f.read())
-    f.close()
-
+    try:
+        with open(file, "r", encoding="utf-8") as f:
+            stock_data = json.loads(f.read())
+    except FileNotFoundError:
+        print(f"Warning: {file} not found, starting with empty inventory.")
+        stock_data = {}
+    except json.JSONDecodeError:
+        print(f"Warning: Could not decode {file}, starting with empty inventory.")
+        stock_data = {}
 def saveData(file="inventory.json"):
-    f = open(file, "w")
-    f.write(json.dumps(stock_data))
-    f.close()
+    with open(file, "w", encoding="utf-8") as f:
+        f.write(json.dumps(stock_data, indent=4)) 
 
 def printData():
     print("Items Report")
