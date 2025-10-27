@@ -4,7 +4,7 @@ from datetime import datetime
 # Global variable
 stock_data = {}
 
-def addItem(item="default", qty=0, logs=None):
+def add_item(item="default", qty=0, logs=None):
     if logs is None:
         logs = []
 
@@ -18,7 +18,7 @@ def addItem(item="default", qty=0, logs=None):
 
     logs.append("%s: Added %d of %s" % (str(datetime.now()), qty, item))
 
-def removeItem(item, qty):
+def remove_item(item, qty):
     # Bare except: Changed 'except:' to 'except KeyError:'
     try:
         stock_data[item] -= qty
@@ -28,10 +28,10 @@ def removeItem(item, qty):
         print(f"Warning: Attempted to remove item '{item}' which does not exist")
         pass
 
-def getQty(item):
+def get_qty(item):
     return stock_data[item]
 
-def loadData(file="inventory.json"):
+def load_data(file="inventory.json"):
 # Replaced manual open/close with a 'with' block.
 # This automatically closes the file even if errors occur.
     global stock_data
@@ -44,16 +44,16 @@ def loadData(file="inventory.json"):
     except json.JSONDecodeError:
         print(f"Warning: Could not decode {file}, starting with empty inventory.")
         stock_data = {}
-def saveData(file="inventory.json"):
+def save_data(file="inventory.json"):
     with open(file, "w", encoding="utf-8") as f:
         f.write(json.dumps(stock_data, indent=4)) 
 
-def printData():
+def print_data():
     print("Items Report")
     for i in stock_data:
         print(i, "->", stock_data[i])
 
-def checkLowItems(threshold=5):
+def check_low_items(threshold=5):
     result = []
     for i in stock_data:
         if stock_data[i] < threshold:
@@ -61,16 +61,17 @@ def checkLowItems(threshold=5):
     return result
 
 def main():
-    addItem("apple", 10)
-    addItem("banana", -2)
-    addItem(123, "ten")  # invalid types, no check
-    removeItem("apple", 3)
-    removeItem("orange", 1)
-    print("Apple stock:", getQty("apple"))
-    print("Low items:", checkLowItems())
-    saveData()
-    loadData()
-    printData()
+    add_item("apple", 10)
+    add_item("banana", -2)
+    add_item(123, "ten")  # invalid types, no check
+    remove_item("apple", 3)
+    remove_item("orange", 1)
+    print("Apple stock:", get_qty("apple"))
+    print("Low items:", check_low_items())
+    save_data()
+    load_data()
+    print_data()
     # eval("print('eval used')")  # dangerous
     print("Eval commented out")
 main()
+
