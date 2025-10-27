@@ -64,6 +64,6 @@ def main():
     saveData()
     loadData()
     printData()
-    eval("print('eval used')")  # dangerous
-
+    # eval("print('eval used')")  # dangerous
+    print("Eval commented out")
 main()
