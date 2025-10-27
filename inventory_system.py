@@ -20,11 +20,13 @@ def addItem(item="default", qty=0, logs=None):
     logs.append("%s: Added %d of %s" % (str(datetime.now()), qty, item))
 
 def removeItem(item, qty):
+    # Bare except: Changed 'except:' to 'except KeyError:'
     try:
         stock_data[item] -= qty
         if stock_data[item] <= 0:
             del stock_data[item]
-    except:
+    except KeyError:
+        print(f"Warning: Attempted to remove item '{item}' which does not exist")
         pass
 
 def getQty(item):
