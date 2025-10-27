@@ -1,10 +1,10 @@
-1. Which issues were the easiest to fix, and which were the hardest? Why?
+# Which issues were the easiest to fix, and which were the hardest? Why?
 
 Easiest: The flake8 formatting issues (like E302 for blank lines or W291 for trailing whitespace) and the unused import were the easiest. These are purely mechanical fixes where the tool tells you the exact line and what to do (e.g., "add two blank lines"). They require no logical thinking or understanding of the program's flow.
 
 Hardest: The dangerous-default-value (mutable default argument) was arguably the hardest. While the fix itself is small (changing [] to None), understanding why it's a critical bug requires deeper knowledge of how Python evaluates function defaults only once at definition time. The use-of-global issue is also conceptually hard because the "correct" fix isn't a simple change but a larger architectural refactor, like converting the script into a class.
 
-2. Did the static analysis tools report any false positives? If so, describe one example.
+# Did the static analysis tools report any false positives? If so, describe one example.
 
 No, in this specific lab, all the reports from pylint, bandit, and flake8 were accurate and pointed to legitimate issues.
 
@@ -16,7 +16,7 @@ The bare-except (E722) was a genuine anti-pattern that was hiding bugs (like the
 
 All the flake8 style violations were correct and fixing them made the code objectively cleaner.
 
-3. How would you integrate static analysis tools into your actual software development workflow?
+# How would you integrate static analysis tools into your actual software development workflow?
 
 I would integrate them at two key points:
 
@@ -24,7 +24,7 @@ Local Development: First, by integrating the linters directly into the code edit
 
 Continuous Integration (CI): I would add a "Lint & Test" stage to the CI pipeline (e.g., in GitHub Actions). This step would run all the static analysis tools. If any high-severity issues are found, the build would fail, which blocks the pull request from being merged. This enforces a consistent quality standard for the entire team.
 
-4. What tangible improvements did you observe in the code quality, readability, or potential robustness after applying the fixes?
+# What tangible improvements did you observe in the code quality, readability, or potential robustness after applying the fixes?
 
 The improvements were significant and covered every category:
 
